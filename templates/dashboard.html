@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Manager - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Welcome, {{ session['username'] }}!</h2>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        <h3>Passwords</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Website</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for password in passwords %}
+                    <tr>
+                        <td>{{ password[1] }}</td>
+                        <td>{{ password[2] }}</td>
+                        <td>{{ decrypt_password(password[3]) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Add Password</h3>
+        <form action="{{ url_for('add_password') }}" method="post">
+            <label for="website">Website:</label>
+            <input type="text" id="website" name="website" required>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Add Password</button>
+        </form>
+    </div>
+</body>
+</html>
