@@ -6,15 +6,15 @@ import os
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-key_file = 'key.key'
+key_file_path = 'key.key'
 database_file = 'database.db'
 
-if not os.path.exists(key_file):
+if not os.path.exists(key_file_path):
     key = Fernet.generate_key()
-    with open(key_file, 'wb') as key_file:
+    with open(key_file_path, 'wb') as key_file:
         key_file.write(key)
 
-with open(key_file, 'rb') as key_file:
+with open(key_file_path, 'rb') as key_file:
     key = key_file.read()
 
 cipher_suite = Fernet(key)
